@@ -49,26 +49,11 @@ function Index(props) {
     };
   }, [userAnswerArray]);
 
-
-
-  //
   // fetch("json.json").then(function (res){
-  //   console.log("sadsa")
-  //   return JSON.stringify(res);
+  //   return res.json();
   // }).then(function (data){
-  //   console.log("sadsa2")
-  //   setQuestions(data)
+  //   console.log(data)
   // })
-  //
-
-
-
-
-
-
-
-
-
 
   const handelSubmitBtn = (ev) => {
     ev.preventDefault();
@@ -78,31 +63,20 @@ function Index(props) {
     arr.push(answerOfUser);
     setUserAnswerArray([...userAnswerArray, ...arr])
     setDisable(true);
-
-
-
     userAnswerArray.length +=1;
-
-
-
 
     setTimeout(()=>{
       setDisplay("none");
       setDisplayQuestion("block");
-
     },1000)
-
-
   }
 
 
 
   const handelCheckboxClick = (index) => (ev) => {
     setDisable(!ev.target.value);
-    let score = ev.target.value == questions[index].trueAnswer ? 1 : 0;
+    let score = ev.target.value === questions[index].trueAnswer ? 1 : 0;
     setAnswerOfUser(score);
-
-
   }
 
   const questionsRender = questions.map(
@@ -116,18 +90,15 @@ function Index(props) {
 
   return (
     <>
-      {lengthOfResult == 4 ?
+      {lengthOfResult === 4 ?
         `your score is ${userAnswerArray.reduce((sum, el) => sum + el, 0)}` :
         <div>
           <header className={"quizTitle"}> Quiz title</header>
           <LinearProgress lengthOfResult={lengthOfResult}/>
           <ProgresBar display={display}/>
           {questionsRender}
-
         </div>
       }
-
-
     </>
   );
 }
