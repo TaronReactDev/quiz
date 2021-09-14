@@ -1,6 +1,6 @@
 import React from 'react';
 
-function QuestionContainer({questions,  index, lengthOfResult, handelCheckboxClick, handelSubmitBtn}) {
+function QuestionContainer({questions,  index, lengthOfResult, handelCheckboxClick, handelSubmitBtn, disabled, displayQuestion}) {
 
 
   const answerCheckbox = questions.map((el, index) => {
@@ -17,22 +17,21 @@ function QuestionContainer({questions,  index, lengthOfResult, handelCheckboxCli
 
 
 
-
   return (
      <>
        {
          lengthOfResult == index ? <>
-           <article>
+           <article style={{display:displayQuestion}}>
              Question {`${index + 1}`}:
              <p> {questions[index].question}</p>
            </article>
 
            <form onSubmit={handelSubmitBtn}>
-             <ul>
+             <ul className={"checkbox"}  style={{display:displayQuestion}}>
                {answerCheckbox}
              </ul>
 
-             <button onClick={handelSubmitBtn}>submit</button>
+             <button onClick={handelSubmitBtn} disabled={disabled} style={{display:displayQuestion}}>submit</button>
            </form>
          </> : null
        }

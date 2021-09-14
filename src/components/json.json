@@ -1,0 +1,25 @@
+{
+  "questions": [
+    {
+      "question": "how much is 1+1 ?",
+      "answers": [2, 5, 6, 4],
+      "trueAnswer": 2
+    },
+    {
+      "question": "how much is 2+2 ?",
+      "answers": ["2", "5", "6", "4"],
+      "trueAnswer": "4"
+    },
+    {
+      "question": "how much is 3+2 ?",
+      "answers": ["2", "5", "6", "4"],
+      "trueAnswer": "5"
+    },
+    {
+      "question": "how much is 3+3 ?",
+      "answers": ["2", "5", "6", "4"],
+      "trueAnswer": "6"
+    }
+
+  ]
+}

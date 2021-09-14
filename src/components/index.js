@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import LinearProgress from "./linearProgress"
 import QuestionContainer from "./questionContainer";
-
+import ProgresBar from "./progresBar"
 
 const questions = [
   {
@@ -34,6 +34,15 @@ function Index(props) {
 
   const [lengthOfResult, setLengthOfResult] = useState(0);
 
+  const [disable, setDisable] = useState(true);
+
+  const [display, setDisplay] =useState("none")
+
+  const [displayQuestion, setDisplayQuestion] =useState("block")
+//
+// const [questions, setQuestions] = useState()
+
+
   useEffect(() => {
     return () => {
       setLengthOfResult(userAnswerArray.length)
@@ -41,18 +50,57 @@ function Index(props) {
   }, [userAnswerArray]);
 
 
+
+  //
+  // fetch("json.json").then(function (res){
+  //   console.log("sadsa")
+  //   return JSON.stringify(res);
+  // }).then(function (data){
+  //   console.log("sadsa2")
+  //   setQuestions(data)
+  // })
+  //
+
+
+
+
+
+
+
+
+
+
   const handelSubmitBtn = (ev) => {
     ev.preventDefault();
-
+    setDisplay("flex")
+    setDisplayQuestion("none")
     let arr = [];
     arr.push(answerOfUser);
     setUserAnswerArray([...userAnswerArray, ...arr])
+    setDisable(true);
+
+
+
+    userAnswerArray.length +=1;
+
+
+
+
+    setTimeout(()=>{
+      setDisplay("none");
+      setDisplayQuestion("block");
+
+    },1000)
+
 
   }
 
-  const handelCheckboxClick = (index)=>(ev) => {
- let scor = ev.target.value == questions[index].trueAnswer ? 1 : 0;
-    setAnswerOfUser(scor);
+
+
+  const handelCheckboxClick = (index) => (ev) => {
+    setDisable(!ev.target.value);
+    let score = ev.target.value == questions[index].trueAnswer ? 1 : 0;
+    setAnswerOfUser(score);
 
 
   }
@@ -61,21 +109,22 @@ function Index(props) {
     (el, index) => {
       return (
         <QuestionContainer questions={questions} index={index} lengthOfResult={lengthOfResult}
-                           handelSubmitBtn={handelSubmitBtn} handelCheckboxClick={handelCheckboxClick}/>)
+                           handelSubmitBtn={handelSubmitBtn} handelCheckboxClick={handelCheckboxClick}
+                           disabled={disable} displayQuestion={displayQuestion}/>)
     }
   )
-  console.log(userAnswerArray)
 
   return (
     <>
-      {        lengthOfResult == 4 ?
-         `your scor is ${userAnswerArray.reduce((sum,el)=> sum+el, 0)}`:
-          <div>
-            <header className={"quizTitle"}> Quiz title</header>
-            <LinearProgress lengthOfResult={lengthOfResult}/>
-            {questionsRender}
+      {lengthOfResult == 4 ?
+        `your score is ${userAnswerArray.reduce((sum, el) => sum + el, 0)}` :
+        <div>
+          <header className={"quizTitle"}> Quiz title</header>
+          <LinearProgress lengthOfResult={lengthOfResult}/>
+          <ProgresBar display={display}/>
+          {questionsRender}
 
-          </div>
+        </div>
       }
 
 
