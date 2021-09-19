@@ -3,31 +3,34 @@ import LinearProgress from "./linearProgress"
 import QuestionContainer from "./questionContainer";
 import ProgresBar from "./progresBar"
 
-const questions = [
-  {
-    question: "how much is 1+1 ?",
-    answers: [2, 5, 6, 4],
-    trueAnswer: 2,
-  },
-  {
-    question: "how much is 2+2 ?",
-    answers: [2, 5, 6, 4],
-    trueAnswer: 4,
-  },
-  {
-    question: "how much is 3+2 ?",
-    answers: [2, 5, 6, 4],
-    trueAnswer: 5,
-  },
-  {
-    question: "how much is 3+3 ?",
-    answers: [2, 5, 6, 4],
-    trueAnswer: 6,
-  }
-];
+// const questions = [
+//   {
+//     question: "how much is 1+1 ?",
+//     answers: [2, 5, 6, 4],
+//     trueAnswer: 2,
+//   },
+//   {
+//     question: "how much is 2+2 ?",
+//     answers: [2, 5, 6, 4],
+//     trueAnswer: 4,
+//   },
+//   {
+//     question: "how much is 3+2 ?",
+//     answers: [2, 5, 6, 4],
+//     trueAnswer: 5,
+//   },
+//   {
+//     question: "how much is 3+3 ?",
+//     answers: [2, 5, 6, 4],
+//     trueAnswer: 6,
+//   }
+// ];
+
 
 
 function Index(props) {
+  const [questions, setQuestions] = useState();
+
   const [answerOfUser, setAnswerOfUser] = useState();
 
   const [userAnswerArray, setUserAnswerArray] = useState([]);
@@ -39,21 +42,20 @@ function Index(props) {
   const [display, setDisplay] =useState("none")
 
   const [displayQuestion, setDisplayQuestion] =useState("block")
-//
-// const [questions, setQuestions] = useState()
 
-
-  useEffect(() => {
-    return () => {
-      setLengthOfResult(userAnswerArray.length)
-    };
-  }, [userAnswerArray]);
-
-  // fetch("json.json").then(function (res){
-  //   return res.json();
-  // }).then(function (data){
-  //   console.log(data)
-  // })
+ useEffect(()=>{
+   fetch('/json.json')
+     .then(response => {
+       if (!response.ok) {
+         throw new Error("HTTP error " + response.status);
+       }
+       return response.json()
+     }).then(data => {
+     setQuestions([...data])
+   }).catch(function (e) {
+     console.log(e)
+   })
+ }, [])
 
   const handelSubmitBtn = (ev) => {
     ev.preventDefault();
