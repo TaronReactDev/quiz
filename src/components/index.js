@@ -44,7 +44,7 @@ function Index(props) {
   const [displayQuestion, setDisplayQuestion] =useState("block")
 
  useEffect(()=>{
-   fetch('/json.json')
+   fetch('/data.json')
      .then(response => {
        if (!response.ok) {
          throw new Error("HTTP error " + response.status);
