@@ -3,33 +3,10 @@ import LinearProgress from "./linearProgress"
 import QuestionContainer from "./questionContainer";
 import ProgresBar from "./progresBar"
 
-// const questions = [
-//   {
-//     question: "how much is 1+1 ?",
-//     answers: [2, 5, 6, 4],
-//     trueAnswer: 2,
-//   },
-//   {
-//     question: "how much is 2+2 ?",
-//     answers: [2, 5, 6, 4],
-//     trueAnswer: 4,
-//   },
-//   {
-//     question: "how much is 3+2 ?",
-//     answers: [2, 5, 6, 4],
-//     trueAnswer: 5,
-//   },
-//   {
-//     question: "how much is 3+3 ?",
-//     answers: [2, 5, 6, 4],
-//     trueAnswer: 6,
-//   }
-// ];
-
 
 
 function Index(props) {
-  const [questions, setQuestions] = useState();
+  const [questions, setQuestions] = useState([]);
 
   const [answerOfUser, setAnswerOfUser] = useState();
 
@@ -43,7 +20,7 @@ function Index(props) {
 
   const [displayQuestion, setDisplayQuestion] =useState("block")
 
- useEffect(()=>{
+useEffect(()=>{
    fetch('/data.json')
      .then(response => {
        if (!response.ok) {
@@ -51,7 +28,7 @@ function Index(props) {
        }
        return response.json()
      }).then(data => {
-     setQuestions([...data])
+     setQuestions([...questions,...data.questions])
    }).catch(function (e) {
      console.log(e)
    })
@@ -65,7 +42,7 @@ function Index(props) {
     arr.push(answerOfUser);
     setUserAnswerArray([...userAnswerArray, ...arr])
     setDisable(true);
-    userAnswerArray.length +=1;
+    setLengthOfResult(userAnswerArray.length +1);
 
     setTimeout(()=>{
       setDisplay("none");
@@ -86,13 +63,17 @@ function Index(props) {
       return (
         <QuestionContainer questions={questions} index={index} lengthOfResult={lengthOfResult}
                            handelSubmitBtn={handelSubmitBtn} handelCheckboxClick={handelCheckboxClick}
-                           disabled={disable} displayQuestion={displayQuestion}/>)
+                           disabled={disable} displayQuestion={displayQuestion}
+                           key={`question_${index}`}/>)
     }
   )
 
+
   return (
     <>
-      {lengthOfResult === 4 ?
+      {
+          questions.length ===4?
+          lengthOfResult === 4 ?
         `your score is ${userAnswerArray.reduce((sum, el) => sum + el, 0)}` :
         <div>
           <header className={"quizTitle"}> Quiz title</header>
@@ -100,6 +81,8 @@ function Index(props) {
           <ProgresBar display={display}/>
           {questionsRender}
         </div>
+          : ""
+
       }
     </>
   );

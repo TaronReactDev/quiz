@@ -4,20 +4,21 @@ function QuestionContainer({questions,  index, lengthOfResult, handelCheckboxCli
 
 
   const answerCheckbox = questions.map((el, index) => {
-  if(lengthOfResult === index) {return el.answers.map((el) => {
+  if(lengthOfResult === index) {return el.answers.map((el,i) => {
 
-      return (<li>
-          <input type="checkbox" id="horns" name="horns" value={el} onClick={handelCheckboxClick(index)}/>
+      return (<li key={`question_li_${i}`}>
+          <input type="radio" id="horns" name="horns" value={el} onClick={handelCheckboxClick(index)}/>
           <label htmlFor="horns">{el}</label>
         </li>
       )
     })}
   })
 
-  return (
-     <>
+
+    return (
+        <div >
        {
-         lengthOfResult === index ? <>
+         lengthOfResult === index ? <div >
            <article style={{display:displayQuestion}}>
              Question {`${index + 1}`}:
              <p> {questions[index].question}</p>
@@ -30,9 +31,9 @@ function QuestionContainer({questions,  index, lengthOfResult, handelCheckboxCli
 
              <button onClick={handelSubmitBtn} disabled={disabled} style={{display:displayQuestion}}>submit</button>
            </form>
-         </> : null
+         </div> : null
        }
-     </>
+     </div>
 )
 }
 
